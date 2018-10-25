@@ -5,8 +5,6 @@ SCORE = [[3, 0], [5, 1]]
 C = 0
 D = 1
 
-PLAYER = []
-
 """
 Playerの種類
 AllC: All-C
@@ -46,7 +44,7 @@ class AllD(Player):
 class TFT(Player):
     def __init__(self):
         self.my_score = 0
-        self.opp_prev_action = 0
+        self.opp_prev_action = C
 
     def action(self):
         if self.opp_prev_action == C:
@@ -65,7 +63,7 @@ class Random(Player):
 class Downing(Player):
     def __init__(self):
         self.my_score = 0
-        self.my_prev_action = 0
+        self.my_prev_action = C
         self.prop_c = 0.5
         self.prop_d = 0.5
 
@@ -85,13 +83,13 @@ class Downing(Player):
         self.my_prev_action = a1
 
     def update(self, a2):
-        if self.my_prev_action == 0:
-            if a2 == 0:
+        if self.my_prev_action == C:
+            if a2 == C:
                 self.prop_c += 0.05
             else:
                 self.prop_d += 0.05
         else:
-            if a2 == 0:
+            if a2 == C:
                 self.prop_d += 0.05
             else:
                 self.prop_c += 0.05
@@ -99,10 +97,10 @@ class Downing(Player):
 class Joss(Player):
     def __init__(self):
         self.my_score = 0
-        self.opp_prev_action = 0
+        self.opp_prev_action = C
 
     def action(self):
-        if self.opp_prev_action == 0:
+        if self.opp_prev_action == C:
             if random.randrange(10) == 0:
                 return D
             else:
@@ -162,25 +160,25 @@ class Tester(Player):
 class TFTT(Player):
     def __init__(self):
         self.my_score = 0
-        self.opp_prev_action = 0
-        self.opp_prev_prev_action = 0
+        self.opp_prev_action = C
+        self.opp_prev_prev_action = C
 
     def action(self):
-        if self.opp_prev_action == 1 and self.opp_prev_prev_action == 1:
+        if self.opp_prev_action == D and self.opp_prev_prev_action == D:
             return D
         else:
             return C
 
     def add_score(self, a1, a2):
         self.my_score += SCORE[a1][a2]
-        self.opp_prev_action = a2
         self.opp_prev_prev_action = self.opp_prev_action
+        self.opp_prev_action = a2
 
 # 変形しっぺ返し: 3回目裏切るやつ
 class DTFT(Player):
     def __init__(self):
         self.my_score = 0
-        self.opp_prev_action = 0
+        self.opp_prev_action = C
         self.counter = 0
 
     def action(self):
@@ -200,12 +198,12 @@ class DTFT(Player):
 class DDowning(Player):
     def __init__(self):
         self.my_score = 0
-        self.my_prev_action = 0
+        self.my_prev_action = C
         self.prop_c = 0.5
         self.prop_d = 0.5
         self.counter = 0
         self.opp_coop_count = 0
-        self.opp_coop_prop = 0
+        self.opp_coop_prop = 0.0
 
     def action(self):
         if abs(self.prop_c - self.prop_d) < 0.1:
@@ -224,7 +222,7 @@ class DDowning(Player):
         self.my_prev_action = a1
 
     def update(self, a2):
-        if self.my_prev_action == 0:
+        if self.my_prev_action == C:
             if a2 == C:
                 self.prop_c += 0.05
                 self.opp_coop_count += 1
@@ -245,10 +243,10 @@ class Tranquilizer(Player):
         self.my_scores = []
         self.init_phase = 10 + random.randrange(11)
         self.my_defect_count = 0
-        self.my_defect_prop = 0
-        self.my_prev_action = 0
+        self.my_defect_prop = 0.0
+        self.my_prev_action = C
         self.opp_defect_count = 0
-        self.opp_defect_prop = 0
+        self.opp_defect_prop = 0.0
         self.cont_both_coop = 0
 
     def action(self):
