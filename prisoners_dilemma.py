@@ -292,6 +292,33 @@ class Tranquilizer(Player):
         self.my_defect_prop = self.my_defect_count / self.counter
         self.opp_defect_prop = self.opp_defect_count / self.counter
 
+class MyStrategy(Player):
+    def __init__(self):
+        self.my_score = 0
+        self.my_prev_action = C
+        self.prev_score = 3
+
+    def action(self):
+        if self.my_prev_action == C:
+            # うまくいったら(C, C) → 3
+            if self.prev_score == 3:
+                return C
+            # (C, D) → 0
+            else:
+                return D
+        else:
+            # (D, C) → 5
+            if self.prev_score == 2:
+                return D
+            # (D, D) → 1
+            else:
+                return C
+
+    def add_score(self, a1, a2):
+        self.my_score += SCORE[a1][a2]
+        self.my_prev_action = a1
+        self.prev_score = SCORE[a1][a2]
+
 class PlayerCreator:
     def create_player(self, name):
         if name == "AllC":
@@ -316,6 +343,8 @@ class PlayerCreator:
             return DDowning()
         elif name == "Tranquilizer":
             return Tranquilizer()
+        elif name == "MyStrategy":
+            return MyStrategy()
         else:
             import sys
             print("Not Defined {}.".format(name))
@@ -379,7 +408,7 @@ def play_game(p1, p2):
     return [p1.my_score, p2.my_score]
 
 def main():
-    player_arr = ["AllC", "AllD", "TFT", "Random", "Downing", "Joss", "Tester", "TFTT", "DTFT", "DDowning", "Tranquilizer"]
+    player_arr = ["AllC", "AllD", "TFT", "Random", "Downing", "Joss", "Tester", "TFTT", "DTFT", "DDowning", "Tranquilizer", "MyStrategy"]
     td = TableData(player_arr)
     pc = PlayerCreator()
     x = 1
