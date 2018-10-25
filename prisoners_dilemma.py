@@ -206,6 +206,10 @@ class DDowning(Player):
         self.opp_coop_prop = 0.0
 
     def action(self):
+        # 5割以上協調なら協調する
+        if self.opp_coop_prop >= 0.5:
+            return C
+
         if abs(self.prop_c - self.prop_d) < 0.1:
             return D
         # 協調したら協調してくる→C
