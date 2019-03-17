@@ -410,7 +410,8 @@ def play_game(p1, p2):
     return [p1.my_score, p2.my_score]
 
 def main():
-    player_arr = ["AllC", "AllD", "TFT", "Random", "Downing", "Joss", "Tester", "TFTT", "DTFT", "DDowning", "Tranquilizer", "MyStrategy"]
+    player_arr = ["AllC", "AllD", "TFT", "Random", "Downing", "Joss", "Tester", "TFTT", "DTFT", "DDowning", "Tranquilizer"]
+    # player_arr = ["AllC", "AllD", "TFT", "Random", "Downing", "Joss", "Tester", "TFTT", "DTFT", "DDowning", "Tranquilizer", "MyStrategy"]
     td = TableData(player_arr)
     pc = PlayerCreator()
     x = 1
